@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos de Comida - Thay</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff8f0;
+      color: #333;
+    }
+    header {
+      background-color: #ff6b6b;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav {
+      background-color: #ffe6e6;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+    .cardapio {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .prato {
+      border: 1px solid #ffcccc;
+      border-radius: 10px;
+      margin: 0.5rem;
+      padding: 0.5rem;
+      width: 200px;
+      text-align: center;
+      background-color: #fff0f0;
+    }
+    .prato img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .prato button {
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    footer {
+      background-color: #ff6b6b;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      margin: 1rem auto;
+      gap: 0.5rem;
+    }
+    input, textarea {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background-color: #ff6b6b;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pedidos da Thay</h1>
+    <p>Peça sua comida favorita sem sair de casa!</p>
+  </header>
+
+  <nav>
+    <a href="#cardapio">Cardápio</a>
+    <a href="#pedido">Fazer Pedido</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <section id="cardapio" class="cardapio">
+    <div class="prato">
+      <img src="https://via.placeholder.com/200x150.png?text=Hamburguer" alt="Hamburguer">
+      <h3>Hamburguer</h3>
+      <p>R$ 20,00</p>
+      <button onclick="adicionarPedido('Hamburguer', 20)">Adicionar ao Pedido</button>
+    </div>
+    <div class="prato">
+      <img src="https://via.placeholder.com/200x150.png?text=Pizza" alt="Pizza">
+      <h3>Pizza</h3>
+      <p>R$ 30,00</p>
+      <button onclick="adicionarPedido('Pizza', 30)">Adicionar ao Pedido</button>
+    </div>
+    <div class="prato">
+      <img src="https://via.placeholder.com/200x150.png?text=Refrigerante" alt="Refrigerante">
+      <h3>Refrigerante</h3>
+      <p>R$ 5,00</p>
+      <button onclick="adicionarPedido('Refrigerante', 5)">Adicionar ao Pedido</button>
+    </div>
+  </section>
+
+  <section id="pedido">
+    <h2 style="text-align:center;">Seu Pedido</h2>
+    <form id="pedidoForm" onsubmit="enviarWhatsApp(event)">
+      <input type="text" id="nome" placeholder="Seu nome" required>
+      <input type="text" id="telefone" placeholder="Telefone/WhatsApp" required>
+      <textarea id="observacoes" placeholder="Observações do pedido"></textarea>
+      <input type="submit" value="Finalizar Pedido via WhatsApp">
+    </form>
+  </section>
+
+  <section id="contato" style="text-align:center; padding: 1rem;">
+    <h2>Contato</h2>
+    <p>WhatsApp: <a href="https://wa.me/5511999999999" target="_blank">Clique aqui</a></p>
+    <p>Endereço: Rua Exemplo, 123 - Cidade</p>
+  </section>
+
+  <footer>
+    <p>© 2025 Pedidos da Thay</p>
+  </footer>
+
+  <script>
+    let pedido = [];
+
+    function adicionarPedido(item, preco) {
+      pedido.push({ item, preco });
+      alert(item + " adicionado ao pedido!");
+    }
+
+    function enviarWhatsApp(event) {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const telefone = document.getElementById('telefone').value;
+      const observacoes = document.getElementById('observacoes').value;
+
+      if (pedido.length === 0) {
+        alert("Adicione pelo menos um item ao pedido!");
+        return;
+      }
+
+      let mensagem = `Olá, meu nome é ${nome}.\nMeu pedido:\n`;
+      pedido.forEach(p => {
+        mensagem += `- ${p.item}: R$ ${p.preco}\n`;
+      });
+      mensagem += `Observações: ${observacoes}\nPagamento: na entrega ou retirada.`;
+
+      const url = `https://wa.me/55${telefone.replace(/\D/g,'')}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
