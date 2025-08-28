@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dolce & Pane - Fazer Pedido</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Faça seu Pedido</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cardapio.html">Cardápio</a>
+    <a href="pedido.html">Fazer Pedido</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+
+  <form id="pedidoForm" onsubmit="enviarWhatsApp(event)">
+    <input type="text" id="nome" placeholder="Seu nome" required>
+    <input type="text" id="telefone" placeholder="Telefone/WhatsApp" required>
+    <textarea id="observacoes" placeholder="Observações do pedido"></textarea>
+    <input type="submit" value="Finalizar Pedido via WhatsApp">
+  </form>
+
+  <footer>
+    <p>© 2025 Dolce & Pane</p>
+  </footer>
+
+  <script>
+    function enviarWhatsApp(event) {
+      event.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const telefone = document.getElementById('telefone').value;
+      const observacoes = document.getElementById('observacoes').value;
+
+      const mensagem = `Olá, meu nome é ${nome}.\nObservações: ${observacoes}\nPagamento: na entrega ou retirada.`;
+      const url = `https://wa.me/55${telefone.replace(/\D/g,'')}?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
