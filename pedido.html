@@ -2,42 +2,55 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Meu Pedido - Dolce & Pane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido - Dolce & Pane</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Dolce & Pane</h1>
+    <h1>🍰 Dolce & Pane</h1>
     <nav>
       <a href="index.html">Home</a>
       <a href="cardapio.html">Cardápio</a>
-      <a href="pedido.html">Meu Pedido</a>
+      <a href="bolo.html">Monte seu Bolo</a>
+      <a href="pedido.html">Pedido</a>
+      <a href="contato.html">Contato</a>
     </nav>
   </header>
 
-  <main>
-    <h2>Meu Pedido 🍰</h2>
-    <div id="resumoPedido"></div>
-  </main>
+  <section>
+    <div class="card">
+      <h2>Faça seu Pedido 🍩</h2>
+      <form id="pedidoForm">
+        <label>Produto:</label>
+        <input type="text" id="produto" placeholder="Ex: 6 cupcakes de chocolate" required>
+        
+        <label>Quantidade:</label>
+        <input type="number" id="quantidade" placeholder="Ex: 2" required>
+        
+        <button type="submit">Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </section>
 
   <footer>
-    <p>&copy; 2025 Dolce & Pane</p>
+    <p>© 2025 Dolce & Pane</p>
   </footer>
 
   <script>
-    let pedido = JSON.parse(localStorage.getItem("pedidoBolo"));
-    let div = document.getElementById("resumoPedido");
+    document.getElementById("pedidoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-    if(pedido){
-      div.innerHTML = `
-        <p><b>Massa:</b> ${pedido.massa}</p>
-        <p><b>Recheios:</b> ${pedido.recheios.join(", ")}</p>
-        <p><b>Cobertura:</b> ${pedido.cobertura}</p>
-        <button onclick="alert('Pedido enviado com sucesso!')">Finalizar Pedido</button>
-      `;
-    } else {
-      div.innerHTML = "<p>Nenhum pedido realizado ainda.</p>";
-    }
+      const produto = document.getElementById("produto").value;
+      const quantidade = document.getElementById("quantidade").value;
+
+      const msg = `🛍 Novo pedido:\n\n📦 Produto: ${produto}\n🔢 Quantidade: ${quantidade}`;
+      
+      const phone = "5543999999999"; // <-- teu número
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+
+      window.open(url, "_blank");
+    });
   </script>
 </body>
 </html>
