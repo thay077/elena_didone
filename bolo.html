@@ -23,12 +23,14 @@
     <h2>Monte seu Bolo</h2>
     <form id="boloForm">
 
+      <!-- Massa -->
       <h3>Escolha uma massa:</h3>
       <label><input type="radio" name="massa" value="Baunilha" required> Baunilha</label>
       <label><input type="radio" name="massa" value="Chocolate"> Chocolate</label>
       <label><input type="radio" name="massa" value="Pão de ló"> Pão de ló</label>
       <label><input type="radio" name="massa" value="Brownie"> Brownie</label>
 
+      <!-- Recheios -->
       <h3>Escolha até dois recheios:</h3>
       <label><input type="checkbox" name="recheio" value="Ganache de frutas vermelhas"> Ganache de frutas vermelhas</label>
       <label><input type="checkbox" name="recheio" value="Abacaxi com creme de leite ninho"> Abacaxi com creme de leite ninho</label>
@@ -41,4 +43,49 @@
       <label><input type="checkbox" name="recheio" value="Ameixa com leite condensado cozido"> Ameixa com leite condensado cozido</label>
       <label><input type="checkbox" name="recheio" value="Maracujá"> Maracujá</label>
       <label><input type="checkbox" name="recheio" value="Limão siciliano"> Limão siciliano</label>
-      <label><input type="
+      <label><input type="checkbox" name="recheio" value="Kinder bueno"> Kinder Bueno</label>
+      <label><input type="checkbox" name="recheio" value="4 leites"> 4 leites</label>
+      <label><input type="checkbox" name="recheio" value="Coco"> Coco</label>
+
+      <!-- Cobertura -->
+      <h3>Escolha uma cobertura:</h3>
+      <label><input type="radio" name="cobertura" value="Chantininho" required> Chantininho</label>
+      <label><input type="radio" name="cobertura" value="Nata"> Nata</label>
+      <label><input type="radio" name="cobertura" value="Naked cake (com acetato)"> Naked cake (com acetato)</label>
+      <label><input type="radio" name="cobertura" value="Semi naked"> Semi naked</label>
+      <label><input type="radio" name="cobertura" value="Buttercream"> Buttercream</label>
+
+      <br><br>
+      <button type="submit">Enviar Pedido pelo WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Dolce & Pane</p>
+</footer>
+
+<script>
+document.getElementById("boloForm").addEventListener("submit", function(event){
+  event.preventDefault();
+
+  const massa = document.querySelector("input[name='massa']:checked");
+  const recheios = document.querySelectorAll("input[name='recheio']:checked");
+  const cobertura = document.querySelector("input[name='cobertura']:checked");
+
+  if(!massa || !cobertura || recheios.length === 0 || recheios.length > 2){
+    alert("Escolha 1 massa, até 2 recheios e 1 cobertura!");
+    return;
+  }
+
+  const recheioArray = Array.from(recheios).map(r => r.value);
+  const msg = `Pedido de bolo personalizado:\nMassa: ${massa.value}\nRecheios: ${recheioArray.join(" + ")}\nCobertura: ${cobertura.value}`;
+
+  const phone = "5543999999999"; // Coloque seu número aqui
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+});
+</script>
+
+</body>
+</html>
