@@ -1,44 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dolce & Pane - Fazer Pedido</title>
+  <title>Meu Pedido - Dolce & Pane</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Faça seu Pedido</h1>
+    <h1>Dolce & Pane</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cardapio.html">Cardápio</a>
+      <a href="pedido.html">Meu Pedido</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="cardapio.html">Cardápio</a>
-    <a href="pedido.html">Fazer Pedido</a>
-    <a href="contato.html">Contato</a>
-  </nav>
-
-  <form id="pedidoForm" onsubmit="enviarWhatsApp(event)">
-    <input type="text" id="nome" placeholder="Seu nome" required>
-    <input type="text" id="telefone" placeholder="Telefone/WhatsApp" required>
-    <textarea id="observacoes" placeholder="Observações do pedido"></textarea>
-    <input type="submit" value="Finalizar Pedido via WhatsApp">
-  </form>
+  <main>
+    <h2>Meu Pedido 🍰</h2>
+    <div id="resumoPedido"></div>
+  </main>
 
   <footer>
-    <p>© 2025 Dolce & Pane</p>
+    <p>&copy; 2025 Dolce & Pane</p>
   </footer>
 
   <script>
-    function enviarWhatsApp(event) {
-      event.preventDefault();
-      const nome = document.getElementById('nome').value;
-      const telefone = document.getElementById('telefone').value;
-      const observacoes = document.getElementById('observacoes').value;
+    let pedido = JSON.parse(localStorage.getItem("pedidoBolo"));
+    let div = document.getElementById("resumoPedido");
 
-      const mensagem = `Olá, meu nome é ${nome}.\nObservações: ${observacoes}\nPagamento: na entrega ou retirada.`;
-      const url = `https://wa.me/55${telefone.replace(/\D/g,'')}?text=${encodeURIComponent(mensagem)}`;
-      window.open(url, '_blank');
+    if(pedido){
+      div.innerHTML = `
+        <p><b>Massa:</b> ${pedido.massa}</p>
+        <p><b>Recheios:</b> ${pedido.recheios.join(", ")}</p>
+        <p><b>Cobertura:</b> ${pedido.cobertura}</p>
+        <button onclick="alert('Pedido enviado com sucesso!')">Finalizar Pedido</button>
+      `;
+    } else {
+      div.innerHTML = "<p>Nenhum pedido realizado ainda.</p>";
     }
   </script>
 </body>

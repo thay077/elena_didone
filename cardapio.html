@@ -1,43 +1,86 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dolce & Pane - Cardápio</title>
+  <title>Cardápio - Dolce & Pane</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Cardápio - Dolce & Pane</h1>
+    <h1>Dolce & Pane</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cardapio.html">Cardápio</a>
+      <a href="pedido.html">Meu Pedido</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="cardapio.html">Cardápio</a>
-    <a href="pedido.html">Fazer Pedido</a>
-    <a href="contato.html">Contato</a>
-  </nav>
+  <main>
+    <h2>Monte seu Bolo 🍰</h2>
+    <form id="formBolo">
 
-  <section class="cardapio">
-    <div class="prato">
-      <img src="https://via.placeholder.com/200x150.png?text=Hamburguer" alt="Hamburguer">
-      <h3>Hamburguer</h3>
-      <p>R$ 20,00</p>
-    </div>
-    <div class="prato">
-      <img src="https://via.placeholder.com/200x150.png?text=Pizza" alt="Pizza">
-      <h3>Pizza</h3>
-      <p>R$ 30,00</p>
-    </div>
-    <div class="prato">
-      <img src="https://via.placeholder.com/200x150.png?text=Refrigerante" alt="Refrigerante">
-      <h3>Refrigerante</h3>
-      <p>R$ 5,00</p>
-    </div>
-  </section>
+      <!-- MASSA -->
+      <h3>Escolha uma massa:</h3>
+      <label><input type="radio" name="massa" value="Baunilha"> Baunilha</label>
+      <label><input type="radio" name="massa" value="Chocolate"> Chocolate</label>
+      <label><input type="radio" name="massa" value="Pão de ló"> Pão de ló</label>
+      <label><input type="radio" name="massa" value="Brownie"> Brownie</label>
+
+      <!-- RECHEIOS -->
+      <h3>Escolha até dois recheios:</h3>
+      <label><input type="checkbox" name="recheio" value="Ganache de frutas vermelhas"> Ganache de frutas vermelhas</label>
+      <label><input type="checkbox" name="recheio" value="Abacaxi com creme de leite ninho"> Abacaxi com creme de leite ninho</label>
+      <label><input type="checkbox" name="recheio" value="Ninho com Nutella"> Ninho com Nutella</label>
+      <label><input type="checkbox" name="recheio" value="Brigadeiro"> Brigadeiro</label>
+      <label><input type="checkbox" name="recheio" value="Brigadeiro de ninho"> Brigadeiro de ninho</label>
+      <label><input type="checkbox" name="recheio" value="Nata com morango"> Nata com morango</label>
+      <label><input type="checkbox" name="recheio" value="Crocante de nozes com nata"> Crocante de nozes com nata</label>
+      <label><input type="checkbox" name="recheio" value="Leite condensado cozido"> Leite condensado cozido</label>
+      <label><input type="checkbox" name="recheio" value="Ameixa com leite condensado cozido"> Ameixa com leite condensado cozido</label>
+      <label><input type="checkbox" name="recheio" value="Maracujá"> Maracujá</label>
+      <label><input type="checkbox" name="recheio" value="Limão siciliano"> Limão siciliano</label>
+      <label><input type="checkbox" name="recheio" value="Kinder Bueno"> Kinder Bueno</label>
+      <label><input type="checkbox" name="recheio" value="4 leites"> 4 leites</label>
+      <label><input type="checkbox" name="recheio" value="Coco"> Coco</label>
+
+      <!-- COBERTURA -->
+      <h3>Escolha uma cobertura:</h3>
+      <label><input type="radio" name="cobertura" value="Chantininho"> Chantininho</label>
+      <label><input type="radio" name="cobertura" value="Nata"> Nata</label>
+      <label><input type="radio" name="cobertura" value="Naked Cake"> Naked Cake</label>
+      <label><input type="radio" name="cobertura" value="Semi Naked"> Semi Naked</label>
+      <label><input type="radio" name="cobertura" value="Buttercream"> Buttercream</label>
+
+      <button type="submit">Adicionar ao Pedido 🍰</button>
+    </form>
+  </main>
 
   <footer>
-    <p>© 2025 Dolce & Pane</p>
+    <p>&copy; 2025 Dolce & Pane</p>
   </footer>
+
+  <script>
+    document.getElementById("formBolo").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      let massa = document.querySelector("input[name='massa']:checked");
+      let recheios = document.querySelectorAll("input[name='recheio']:checked");
+      let cobertura = document.querySelector("input[name='cobertura']:checked");
+
+      if(!massa || recheios.length === 0 || recheios.length > 2 || !cobertura){
+        alert("Escolha 1 massa, até 2 recheios e 1 cobertura!");
+        return;
+      }
+
+      let pedido = {
+        massa: massa.value,
+        recheios: Array.from(recheios).map(r => r.value),
+        cobertura: cobertura.value
+      };
+
+      localStorage.setItem("pedidoBolo", JSON.stringify(pedido));
+      window.location.href = "pedido.html";
+    });
+  </script>
 </body>
 </html>
